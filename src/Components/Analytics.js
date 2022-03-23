@@ -1,31 +1,47 @@
 import React, { useState, useEffect } from 'react'
 import { PieChart } from 'react-minimal-pie-chart';
+import { useParams } from 'react-router-dom';
+import { doc, onSnapshot } from "firebase/firestore";
+import db from '../firebase';
 
 // route /queue/:qid
 function Analytics() {
     // Specific to Queue
-    // Pie Chart of Tokens Processed, Issued, Remaining to Issue
-    // Line Chart of Average Time of Queue over time
 
-    const [tokenData, settokenData] = useState({
+    const { qid } = useParams();
+
+    const [queueData, setqueueData] = useState({
+        averageWaitingTime: 0, // in minutes
+        arrTokens: [],
+        maxTokens: 0,
+        queueDetails: {
+            category: '',
+            name: '',
+        },
+        status: '',
         tokenProcessed: 0,
         tokenIssued: 0,
         tokenRemaining: 0,
     });
-    const [averageTime, setAverageTime] = useState([]);
-    // REMINDER  - To change the queue schema to push the avg time of that day with that days date as key in a array 
-
 
     // update the states with the data from the database by doing async functions for the same 
     useEffect(() => {
         async function getData() {
-            // write firebase query here to fetch data the token data;
-
-            // write firebase query here to fetch the average waiting time array from queue collection
-
+            // write firebase query here to fetch data for that queue;
+            const unsub = onSnapshot(
+                doc(db, "queue", qid),
+                { includeMetadataChanges: true },
+                (doc) => {
+                    setqueueData({
+                        ...queueData,
+                        tokenProcessed: doc.data().token_distributed - doc.data().arr_tokens.length,
+                        tokenIssued: doc.data().token_distributed,
+                        tokenRemaining: doc.data().max_tokens - doc.data().token_distributed,
+                    });
+                });
         }
         getData();
-    }, []);
+    }, [qid]);
 
     return (
         <div>
@@ -44,15 +60,15 @@ function Analytics() {
                             { title: 'Tokens Remaining To Be Issued', value: 30, color: '#6A2135', key: 3, dataEntry: { title: 'Tokens Remaining To Be Issued' } },
                         ]}
                     />
-
+                    {/* alternative to pie chart */}
+                    <div className="">
+                        <h2>Tokens Processed: {queueData.tokenProcessed}</h2>
+                        <h2>Tokens Issued: {queueData.tokenIssued}</h2>
+                        <h2>Tokens Remaining: {queueData.tokenRemaining}</h2>
+                    </div>
 
                 </div>
-                <br />
 
-                <div className="container">
-                    Average Token Processing Time
-                    {/* UI For LINE CHART */}
-                </div>
             </div>
         </div>
     )
@@ -60,3 +76,4 @@ function Analytics() {
 }
 
 export default Analytics
+
