@@ -31,6 +31,7 @@ function Analytics() {
                 doc(db, "queue", qid),
                 { includeMetadataChanges: true },
                 (doc) => {
+                    console.log(doc.data());
                     setqueueData({
                         ...queueData,
                         averageWaitingTime: doc.data().Avg_wait_time,
