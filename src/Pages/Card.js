@@ -16,20 +16,11 @@ function col(){
 }
 
 function Cardfunc() {
-    const [queueData, setqueueData] = React.useState({
-        averageWaitingTime: 0, // in minutes
-        arrTokens: [],
-        maxTokens: 0,
-        queueDetails: {},
-        status: true,
-        tokenProcessed: 0,
-        tokenIssued: 0,
-        tokenRemaining: 0,
-    });
+    const [queueData, setqueueData] = React.useState([]);
     const context = useContext(usercontext)
     const { user } = context;
     const uid = user.uid;
-    console.log(uid);
+    console.log("hi");
 
 
   React.useEffect(() => {
@@ -38,20 +29,23 @@ function Cardfunc() {
         //console.log(q);
         var query = collection(db, "queue")
         const querySnapshot = await getDocs(query);
-        //console.log(querySnapshot);
+        // console.log(querySnapshot);
         querySnapshot.forEach((doc) => {
             console.log(doc.data());
+            // setqueueData(queueData => [...queueData, ])
             setqueueData({
                 ...queueData,
-                averageWaitingTime: doc.data().Avg_wait_time,
-                arrTokens: doc.data().arr_tokens,
-                maxTokens: doc.data().max_tokens,
-                queueDetails: doc.data().queue_details,
-                status: doc.data().status,
-                tokenProcessed: doc.data().token_distributed - doc.data().arr_tokens.length,
-                tokenIssued: doc.data().token_distributed,
-                tokenRemaining: doc.data().max_tokens - doc.data().token_distributed,
+                        averageWaitingTime: doc.data().Avg_wait_time,
+                        arrTokens: doc.data().arr_tokens,
+                        maxTokens: doc.data().max_tokens,
+                        queueDetails: doc.data().queue_details,
+                        status: doc.data().status,
+                        tokenProcessed: doc.data().token_distributed - doc.data().arr_tokens.length,
+                        tokenIssued: doc.data().token_distributed,
+                        tokenRemaining: doc.data().max_tokens - doc.data().token_distributed,
+                        prevTokenTimestamp: doc.data().prev_timestamp,
             });
+
         });
     //   const unsub = onSnapshot(
     //     doc(db, "admin", "l3jep9KQkHRVGLdjgQplZINctS42"),
@@ -86,7 +80,7 @@ function Cardfunc() {
                 </CardContent>
             </CardActionArea>
             </Card>
-
+{/* 
             <Grid container>
                 <Grid item xs={6}>
                 <Card sx={{ maxWidth: 200, padding:"10px" }}>
@@ -109,7 +103,7 @@ function Cardfunc() {
             </CardActionArea>
             </Card>
                 </Grid>
-            </Grid>
+            </Grid> */}
         </div>
             
         </>

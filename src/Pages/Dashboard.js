@@ -28,15 +28,6 @@ function Dashboard() {
                     <Cardfunc />
                     <Cardfunc />
                     <Cardfunc />
-                    <Cardfunc />
-                    <Cardfunc />
-                    <Cardfunc />
-                    <Cardfunc />
-                    <Cardfunc />
-                    <Cardfunc />
-                    <Cardfunc />
-                    <Cardfunc />
-                    <Cardfunc />
                 </div>
             </div>
             <Box
