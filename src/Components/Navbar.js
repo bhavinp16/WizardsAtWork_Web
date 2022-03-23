@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import usercontext from '../Context/usercontext';
 import { auth } from '../firebase';
+import { signOut } from 'firebase/auth';
 
 export default function ButtonAppBar() {
 
@@ -32,7 +33,6 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Admin
           </Typography>
-          {/* <Button color="inherit" onClick={() => { console.log('onClick'); window.location.replace("http://stackoverflow.com"); }}>Login!</Button> */}
 
           {
             !user ?
@@ -42,10 +42,17 @@ export default function ButtonAppBar() {
                 </Button>
               ) :
               (
-                <Button onClick={() => { 
-                  auth.signOut();
-                  setuser(null);
-                  <Navigate to="/login" />
+                <Button onClick={() => {
+                  signOut(auth).then(() => {
+                    setuser(null);
+                    <Navigate to="/login" />
+                    // Sign-out successful.
+                  }).catch((error) => {
+                    // An error happened.
+                    console.log(error);
+                  });
+
+
                 }} color="inherit" >
                   LOGOUT
                 </Button>
