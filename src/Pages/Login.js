@@ -1,5 +1,6 @@
 import React from 'react'
 import { useContext, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import usercontext from '../Context/usercontext';
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -30,7 +31,7 @@ function Login() {
                 const userr = userCredential.user;
                 setuser(userr);
                 console.log(user);
-                // <Navigate to="/home" />
+                <Navigate to="/dashboard" />
                 // ...
             })
             .catch((error) => {
@@ -42,15 +43,20 @@ function Login() {
     }
 
     return (
-        <div className="">
-            Login Page
-            <label htmlFor="EmailId">Email ID: </label>
-            <input id="EmailId" name='email' onChange={handlechange} type="text" value={formdata.email} />
+        <div className="container">
+            <div className="">
+                Login Page
+                <label htmlFor="EmailId">Email ID: </label>
+                <input id="EmailId" name='email' onChange={handlechange} type="text" value={formdata.email} />
 
-            <label htmlFor="password">Password</label>
-            <input id="password" name='password' onChange={handlechange} type="password" value={formdata.password} />
+                <label htmlFor="password">Password</label>
+                <input id="password" name='password' onChange={handlechange} type="password" value={formdata.password} />
 
-            <button onClick={logind}>Login</button>
+                <button onClick={logind}>Login</button>
+            </div>
+            <div>
+                <Link to='/signup'>Create a Account</Link>
+            </div>
         </div>
     )
 }

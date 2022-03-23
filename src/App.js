@@ -7,6 +7,7 @@ import Signup from './Pages/Signup';
 import { auth } from './firebase';
 import Home from './Pages/Home';
 import Dashboard from './Pages/Dashboard';
+import { onAuthStateChanged } from 'firebase/auth';
 
 function App() {
 
@@ -14,14 +15,15 @@ function App() {
   const { user, setuser } = context;
 
   setuser(auth.currentUser)
-  // setuser(true);
 
-
-  auth.onAuthStateChanged(function (user) {
+  onAuthStateChanged(auth, (user) => {
     if (user) {
-      setuser(user)
+      setuser(user);
+      // const uid = user.uid;
+    } else {
+      Navigate('/login');
     }
-  })
+  });
 
   // something
   return (
@@ -42,10 +44,10 @@ function App() {
               ) :
               (
                 <>
-                  <Route path="/login" element={<Navigate to="/login" />} />
-                  <Route path="/signup" element={<Navigate to="/home" />} />
-                  <Route path="/" element={<Navigate to="/home" />} />
-                  <Route exact path="/" element={<Home />} />
+                  <Route path="/login" element={<Navigate to="/dashboard" />} />
+                  <Route path="/signup" element={<Navigate to="/dashoard" />} />
+                  <Route path="/" element={<Navigate to="/dashboard" />} />
+                  <Route exact path="/" element={<Dashboard />} />
                   <Route path="/home" element={<Home />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                 </>
