@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import { green } from '@mui/material/colors';
 import Icon from '@mui/material/Icon';
 import AddQueue from "../Components/AddQueue"
+import Modal from "../Components/Modal"
 
 function Dashboard() {
     React.useEffect(() => {
@@ -25,9 +26,6 @@ function Dashboard() {
             <Navbar />
             <div className="App">
                 <div class="d-flex">
-                    <Cardfunc />
-                    <Cardfunc />
-                    <Cardfunc />
                     <Cardfunc />
                    
                 </div>
