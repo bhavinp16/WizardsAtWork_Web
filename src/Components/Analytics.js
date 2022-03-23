@@ -14,11 +14,8 @@ function Analytics() {
         averageWaitingTime: 0, // in minutes
         arrTokens: [],
         maxTokens: 0,
-        queueDetails: {
-            category: '',
-            name: '',
-        },
-        status: '',
+        queueDetails: {},
+        status: true,
         tokenProcessed: 0,
         tokenIssued: 0,
         tokenRemaining: 0,
@@ -34,6 +31,11 @@ function Analytics() {
                 (doc) => {
                     setqueueData({
                         ...queueData,
+                        averageWaitingTime: doc.data().Avg_wait_time,
+                        arrTokens: doc.data().arr_tokens,
+                        maxTokens: doc.data().max_tokens,
+                        queueDetails: doc.data().queue_details,
+                        status: doc.data().status,
                         tokenProcessed: doc.data().token_distributed - doc.data().arr_tokens.length,
                         tokenIssued: doc.data().token_distributed,
                         tokenRemaining: doc.data().max_tokens - doc.data().token_distributed,
@@ -60,11 +62,26 @@ function Analytics() {
                             { title: 'Tokens Remaining To Be Issued', value: 30, color: '#6A2135', key: 3, dataEntry: { title: 'Tokens Remaining To Be Issued' } },
                         ]}
                     />
-                    {/* alternative to pie chart */}
+
+                    {/* Queue Details */}
+                    <div className="">
+                        <h5>Queue Details</h5>
+                        <h2>Category: {queueData.queueDetails.category}</h2>
+                        <h2>Name: {queueData.queueDetails.name}</h2>
+                    </div>
+
+                    {/* Token Data */}
                     <div className="">
                         <h2>Tokens Processed: {queueData.tokenProcessed}</h2>
                         <h2>Tokens Issued: {queueData.tokenIssued}</h2>
                         <h2>Tokens Remaining: {queueData.tokenRemaining}</h2>
+                    </div>
+
+                    {/* Queue Stats */}
+                    <div className="">
+                        <h2>Average Waiting Time: {queueData.averageWaitingTime} minutes</h2>
+                        <h2>Max Tokens: {queueData.maxTokens}</h2>
+                        <h2>Status: {queueData.status ? "Running" : "Stopped"}</h2>
                     </div>
 
                 </div>
