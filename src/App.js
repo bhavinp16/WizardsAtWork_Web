@@ -36,18 +36,19 @@ function App() {
                 <>
                   {/* redirect to login if no user*/}
                   <Route exact path="/" element={<Navigate to="/login" />} />
-                  <Route exact path="/home" element={<Navigate to="/login" />} />
+                  {/* <Route exact path="/home" element={<Navigate to="/login" />} /> */}
                   <Route exact path="/dashboard" element={<Navigate to="/login" />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/signup" element={<Signup />} />
+                  <Route path="/home" element={<Home />} />
                 </>
               ) :
               (
                 <>
                   <Route path="/login" element={<Navigate to="/dashboard" />} />
                   <Route path="/signup" element={<Navigate to="/dashoard" />} />
-                  <Route path="/" element={<Navigate to="/dashboard" />} />
-                  <Route exact path="/" element={<Dashboard />} />
+                  <Route path="/" element={<Navigate to="/home" />} />
+                  {/* <Route exact path="/" element={<Dashboard />} /> */}
                   <Route path="/home" element={<Home />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                 </>
