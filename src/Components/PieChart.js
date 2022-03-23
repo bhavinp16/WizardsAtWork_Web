@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts'
 
-class PieChart extends Component {
+function PieChart({ tokenRemaining, tokenWaiting, tokenProcessed }) {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
+    const [settings, setSettings] = useState(
+        {
 
             // series: [30, 10, 60],
-            series: [this.props?.tokenRemaining, this.props?.tokenIssued, this.props?.tokenProcessed],
+            series: [tokenRemaining, tokenWaiting, tokenProcessed],
             options: {
                 chart: {
                     width: 400,
@@ -33,17 +31,13 @@ class PieChart extends Component {
             },
 
         }
-    }
+    );
 
-    render() {
-
-        return (
-            <div className="donut m-4">
-                <Chart options={this.state.options} series={this.state.series} type="donut" width="380" />
-            </div>
-        );
-
-    }
+    return (
+        <div className="donut m-4 border border-1 border-grey rounded-3 shadow p-4">
+            <Chart options={settings.options} series={settings.series} type="donut" width="380" />
+        </div>
+    );
 }
 
 export default PieChart;
