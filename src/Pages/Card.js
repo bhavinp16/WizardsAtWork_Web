@@ -8,15 +8,22 @@ import { doc, onSnapshot, query,collection, getDocs, where } from "firebase/fire
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { Button, CardActionArea } from '@mui/material';
 import bgs from '../static/cardbg.js';
 import {Grid} from '@material-ui/core';
 function col(){
     return bgs[Math.floor(Math.random() * 5)]
 }
+var arr=[]
 
+function sm(){
+    console.log(arr);
+}
 function Cardfunc() {
+<<<<<<< HEAD
     const arr = [];
+=======
+>>>>>>> ebbca771dc3221ff60272035c6d84761f8757461
     const [queueData, setqueueData] = React.useState({
         averageWaitingTime: 0, // in minutes
         arrTokens: [],
@@ -68,10 +75,15 @@ function Cardfunc() {
       }
   getData();
 }, []);
-//  var st=col()
+
     return (
         <>
         <div style={{padding:"10px"  }} >
+        <div className="users">
+      {arr.map((user) => (
+        <div className="user"> {user.Avg_wait_time}
+        {user.admin_id}
+        {user.status}
         <Card sx={{ maxWidth: 200, padding:"10px" }}>
             <CardActionArea style={{flexWrap: 'wrap'}} >
                 <CardMedia
@@ -92,7 +104,12 @@ function Cardfunc() {
             </CardActionArea>
             </Card>
         </div>
-            
+      ))}
+    </div>
+            <Button onClick={sm}>HERE</Button>
+        </div>
+
+
         </>
     )
 }
