@@ -1,18 +1,26 @@
 const places = [
     {
-      title: 'Green',
+      title: 'Digital Tokens',
       description:
-        "The Maldives are home to some of the world's most ravishing islands, but it's the sea, which truly makes these islands shine. Luminous aquamarine waters with a crystal clarity lap upon these dazzling white shores, which barely peek above the Indian Ocean.",
-      imageUrl: process.env.PUBLIC_URL + '/assets/island1.jpg',
+        "Join a queue digitally, you stand in a line without actually standing in a line.",
+      imageUrl: 'https://previews.123rf.com/images/sanek13744/sanek137441607/sanek13744160700255/59664941-money-icon-blue-coins-flat-vector-illustration.jpg',
       time: 1500,
     },
     {
-      title: 'Bora Bora',
+      title: 'Prevent Crowds',
       description:
-        'Shaped like a giant sombrero, this lush volcanic island stars in countless South Pacific fantasies. The focal point and best asset of this tropical beauty is its ravishing lagoon in technicolor turquoise. Fish, turtles, sharks, and rays swim in the clear waters.',
-      imageUrl: process.env.PUBLIC_URL + '/assets/island2.jpg',
+        'Avoid crowds, avoid germs. Encourages safety of peers as well as employees.',
+      imageUrl: 'https://i.pinimg.com/736x/64/86/08/648608cafd619b68e0ca00f573aa9553.jpg',
       time: 1500,
     },
+    {
+        title: 'Realtime analytics',
+        description:
+          'Avoid crowds, avoid germs. Encourages safety of peers as well as employees.',
+        imageUrl: 'https://thumbs.dreamstime.com/b/percent-blue-pie-chart-percentage-vector-infographics-circle-diagram-business-illustration-grey-white-89643592.jpg',
+        time: 1500,
+      },
+  
   ];
   
   export default places;

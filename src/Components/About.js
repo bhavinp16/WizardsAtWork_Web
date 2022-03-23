@@ -109,12 +109,14 @@ export default function () {
   const checked = useWindowPosition('header');
   return (
       <div>
-          <div style={{fontFamily: 'Nunito', color:'ivory', padding:'10px',size: '4.5rem'}}>
+          <div style={{fontFamily: 'Nunito', color:'ivory', padding:'10px'}}>
               <h1 style={{marginTop:'10px',}}>Key Features</h1>
           </div>
           <div className={classes.root} id="place-to-visit">
-        <ImageCard place={places[1]} checked={checked} />
         <ImageCard place={places[0]} checked={checked} />
+        <ImageCard place={places[1]} checked={checked} />
+        <ImageCard place={places[2]} checked={checked} />
+
     </div>
 
       </div>
