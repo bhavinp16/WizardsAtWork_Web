@@ -80,30 +80,6 @@ function Cardfunc() {
                 </CardContent>
             </CardActionArea>
             </Card>
-{/* 
-            <Grid container>
-                <Grid item xs={6}>
-                <Card sx={{ maxWidth: 200, padding:"10px" }}>
-            <CardActionArea style={{flexWrap: 'wrap'}} >
-                <CardMedia
-                component="img"
-                height="140"
-                width="150"
-                image={col()}
-                //alt="Create a Queue"
-                />
-                <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                {queueData.queueDetails.category}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                {queueData.queueDetails.name}
-                </Typography>
-                </CardContent>
-            </CardActionArea>
-            </Card>
-                </Grid>
-            </Grid> */}
         </div>
             
         </>
