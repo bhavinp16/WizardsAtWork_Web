@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import usercontext from './usercontext';
 
-
 function UserState(props) {
 
     const [user, setuser] = useState(null);

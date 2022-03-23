@@ -4,7 +4,7 @@ import './App.css';
 import usercontext from './Context/usercontext';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
-import { auth } from './firebase';
+// import { auth } from './firebase';
 import Home from './Pages/Home';
 import Dashboard from './Pages/Dashboard';
 
@@ -14,14 +14,14 @@ function App() {
   const { user, setuser } = context;
 
   // setuser(auth.currentUser)
-  setuser(false);
+  setuser(true);
 
 
-  auth.onAuthStateChanged(function (user) {
-    if (user) {
-      setuser(user)
-    }
-  })
+  // auth.onAuthStateChanged(function (user) {
+  //   if (user) {
+  //     setuser(user)
+  //   }
+  // })
 
 
   return (
@@ -45,7 +45,7 @@ function App() {
                   <Route path="/login" element={<Navigate to="/home" />} />
                   <Route path="/signup" element={<Navigate to="/home" />} />
                   <Route path="/" element={<Navigate to="/home" />} />
-                  <Route exact path="/" />
+                  <Route exact path="/" element={<Home />} />
                   <Route path="/home" element={<Home />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                 </>
