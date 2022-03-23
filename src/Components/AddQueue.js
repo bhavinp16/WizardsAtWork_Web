@@ -1,6 +1,7 @@
 import React from "react";
 import db from "../firebase";
-import { AdminInput } from "./AdminInput";
+import { doc, onSnapshot, collection, query, where } from "firebase/firestore";
+//import { AdminInput } from "./AdminInput";
 import IconButton from '@mui/material/IconButton';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useState,useEffect } from "react";
@@ -18,14 +19,16 @@ export default function AddQueue() {
     // const [newQueueName, setNewQueueName] = React.useState();
     
 
-    // React.useEffect(() => {
-    //     const fetchData = async () => {
-    //         //const db = firebase.firestore();
-    //         const data = await db.collection("queue").get();
-    //         setQueue(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-    //     };
-    //     fetchData();
-    // }, []);
+    React.useEffect(() => {
+        const fetchData = async () => {
+            //const db = firebase.firestore();
+            console.log("testtt");
+            const data = query(collection(db, "smart-queue-management-s-766c6/organizations"))
+            console.log(data);
+            setQueue(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+        };
+        fetchData();
+    }, []);
 
     // const onCreate = () => {
     //     //const db = firebase.firestore();
