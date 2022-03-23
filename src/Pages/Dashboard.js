@@ -1,8 +1,12 @@
 import React from 'react'
+import AddQueue from '../Components/AddQueue'
 
 function Dashboard() {
     return (
-        <div>Dashboard</div>
+        <>
+            <div>Dashboard</div>
+            <AddQueue />
+        </>
     )
 }
 

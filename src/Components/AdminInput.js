@@ -6,7 +6,7 @@ export const AdminInput = ({ queue }) => {
 
   const onUpdate = () => {
     //const db = firebase.firestore()
-    db.collection('queue').doc(queue.id).set({...queue, name})
+    db.collection('queue').doc(queue.id).set({ ...queue, name })
   }
 
   const onDelete = () => {

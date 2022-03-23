@@ -7,7 +7,6 @@ import Signup from './Pages/Signup';
 import { auth } from './firebase';
 import Home from './Pages/Home';
 import Dashboard from './Pages/Dashboard';
-import AddQueue from './Pages/add_queue';
 
 function App() {
 
