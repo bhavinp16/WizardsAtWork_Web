@@ -42,7 +42,7 @@ function App() {
               ) :
               (
                 <>
-                  <Route path="/login" element={<Navigate to="/home" />} />
+                  <Route path="/login" element={<Navigate to="/login" />} />
                   <Route path="/signup" element={<Navigate to="/home" />} />
                   <Route path="/" element={<Navigate to="/home" />} />
                   <Route exact path="/" element={<Home />} />
