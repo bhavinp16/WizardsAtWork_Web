@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 //import { AdminInput } from "./AdminInput";
 import IconButton from '@mui/material/IconButton';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import Modal from './Modal';
 import {
   getDocs,
   addDoc,
@@ -72,17 +73,17 @@ export default function AddQueue() {
         onChange={e => setNewQueue(e.target.value)}
       /> */}
       {/* <button onClick={onCreate}>Create</button> */}
-      <IconButton
+      {/* <IconButton
         //onClick={createQueue}
         size="large"
         edge="start"
         color="inherit"
         aria-label="add"
         sx={{ mr: 2 }}
-
       >
         <AddBoxIcon />
-      </IconButton>
+      </IconButton> */}
+      <Modal/>
       {/* {queue.map(q => (
                 <li key={q.Queue}>
                     <AdminInput q={q} />

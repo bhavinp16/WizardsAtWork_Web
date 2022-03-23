@@ -16,7 +16,7 @@ const places = [
     {
         title: 'Realtime analytics',
         description:
-          'Ananlyse your queues in real time with different visualizations.',
+          'Analyse your queues in real time with different visualizations.',
         imageUrl: 'https://google.github.io/charts/flutter/example/pie_charts/partial_pie_full.png',
         time: 1500,
       },

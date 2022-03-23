@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { PieChart } from 'react-minimal-pie-chart';
 import { useParams } from 'react-router-dom';
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 import db from '../firebase';
+import InfoCard from './InfoCard';
+import PieChart from './PieChart';
+import Navbar from './Navbar';
 
 // route /queue/:qid
 function Analytics() {
@@ -19,6 +21,7 @@ function Analytics() {
         tokenProcessed: 0,
         tokenIssued: 0,
         tokenRemaining: 0,
+        prevTokenTimestamp: 0,
     });
 
     // update the states with the data from the database by doing async functions for the same 
@@ -40,58 +43,107 @@ function Analytics() {
                         tokenProcessed: doc.data().token_distributed - doc.data().arr_tokens.length,
                         tokenIssued: doc.data().token_distributed,
                         tokenRemaining: doc.data().max_tokens - doc.data().token_distributed,
+                        prevTokenTimestamp: doc.data().prev_timestamp,
                     });
                 });
         }
         getData();
     }, [qid]);
 
+    const handleStatusChange = (e) => {
+        e.preventDefault();
+        // write firebase query here to update the status of the queue
+        const queueRef = doc(db, 'queue', qid);
+        setDoc(queueRef, { status: !queueData.status }, { merge: true });
+    }
+
+    const handleTokenChange = (e) => {
+        e.preventDefault();
+
+        // calculate the token's current time
+        // update the waiting time
+        // remove first token from the arr_tokens
+        // increment tokens distributed
+
+        const currTimestamp = Date.now() / 1000 | 0;
+        const prevTimestamp = queueData.prevTokenTimestamp;
+
+        const res = Math.abs(currTimestamp - prevTimestamp) / 1000;
+
+        const currentTokenTime = Math.floor(res); // in mins
+
+        const queueRef = doc(db, 'queue', qid);
+        setDoc(queueRef, {
+            Avg_wait_time: Math.floor((queueData.averageWaitingTime + currentTokenTime) / (queueData.tokenProcessed + 1)),
+            arr_tokens: queueData.arrTokens.slice(1),
+            token_distributed: queueData.tokenIssued + 1,
+            prev_timestamp: currTimestamp,
+        }, { merge: true });
+    }
+
+
     return (
-        <div>
-            <h1>Analytics</h1>
-            <div className='d-flex justify-content-center align-content-center'>
-                <div className="d-flex flex-column container justify-content-center align-content-center">
-                    <h5> Token Count Status</h5>
-                    {/* UI for PIE CHART */}
-                    <PieChart className='' style={{
-                        width: '250px',
-                        height: '250px',
-                    }}
-                        data={[
-                            { title: 'Tokens Processed', value: 40, color: '#E38627', key: 1, dataEntry: { title: 'Tokens Processed' } },
-                            { title: 'Tokens Waiting', value: 30, color: '#C13C37', key: 2, dataEntry: { title: 'Tokens Waiting' } },
-                            { title: 'Tokens Remaining To Be Issued', value: 30, color: '#6A2135', key: 3, dataEntry: { title: 'Tokens Remaining To Be Issued' } },
-                        ]}
-                    />
+        <>
+            <Navbar />
+            <div className='d-flex flex-column justify-content-center align-content-center border border-grey m-4 shadow p-4'>
 
-                    {/* Queue Details */}
-                    <div className="">
-                        <h5>Queue Details</h5>
-                        <h2>Category: {queueData.queueDetails.category}</h2>
-                        <h2>Name: {queueData.queueDetails.name}</h2>
+                <div className="d-flex justify-items-center align-content-center">
+                    <div className="d-flex container justify-content-center align-content-center">
+                        <div class="jumbotron jumbotron-fluid">
+                            <div class="container-fluid">
+                                <h1 class="display-3">Queue Details</h1>
+                                <p class="lead">Category: {queueData.queueDetails.category}</p>
+                                <p class="lead">Name: {queueData.queueDetails.name}</p>
+                            </div>
+                        </div>
+
+                        {/* Current Token Status */}
+                        <div className="d-flex mx-5 my-2 px-4 py-2">
+                            <InfoCard label='Current Token' value={queueData.arrTokens[0]} color='primary' />
+                            <InfoCard label='Next Token' value={queueData.arrTokens[1]} color='secondary' />
+                        </div>
                     </div>
-
-                    {/* Token Data */}
-                    <div className="">
-                        <h2>Tokens Processed: {queueData.tokenProcessed}</h2>
-                        <h2>Tokens Issued: {queueData.tokenIssued}</h2>
-                        <h2>Tokens Remaining: {queueData.tokenRemaining}</h2>
-                    </div>
-
-                    {/* Queue Stats */}
-                    <div className="">
-                        <h2>Average Waiting Time: {queueData.averageWaitingTime} minutes</h2>
-                        <h2>Max Tokens: {queueData.maxTokens}</h2>
-                        <h2>Status: {queueData.status ? "Running" : "Stopped"}</h2>
-                    </div>
-
                 </div>
 
-            </div>
-        </div>
+
+                <div className='d-flex justify-content-center align-content-center'>
+                    <div className="d-flex container justify-content-center align-content-center">
+
+                        <div className="d-flex flex-column">
+                            <PieChart tokenIssued={queueData.tokenIssued} tokenProcessed={queueData.tokenProcessed} tokenRemaining={queueData.tokenRemaining} />
+
+                            <div className="d-flex justify-content-center align-content-center mt-4">
+                                <button className='btn btn-primary m-2' onClick={handleStatusChange}>Change Queue Status</button>
+                                <button className='btn btn-dark m-2' onClick={handleTokenChange}>Dismiss Token</button>
+                            </div>
+                        </div>
+
+                        {/* Token Data */}
+                        <div className="d-flex flex-column m-3">
+                            <InfoCard label='Tokens Processed' value={queueData.tokenProcessed} color='secondary' />
+                            <InfoCard label='Tokens Issued' value={queueData.tokenIssued} color='info' />
+                            <InfoCard label='Tokens Remaining' value={queueData.tokenRemaining} color='danger' />
+                        </div>
+
+                        <div className="d-flex flex-column m-3">
+                            {/* Queue Stats */}
+                            <div className="">
+                                <InfoCard label='Average Waiting Time' value={queueData.averageWaitingTime} color='info' />
+                                <InfoCard label='Max Tokens' value={queueData.maxTokens} color='secondary' />
+                                <InfoCard label='Queue Status' value={queueData.status ? "Running" : "Stopped"} color={queueData.status ? "success" : "warning"} />
+                            </div>
+                        </div>
+
+                        {/* Queue Operations */}
+
+                    </div>
+                </div>
+
+
+            </div >
+        </>
     )
 
 }
 
 export default Analytics
-

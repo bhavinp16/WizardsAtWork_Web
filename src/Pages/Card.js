@@ -9,6 +9,11 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import bgs from '../static/cardbg.js';
+import {Grid} from '@material-ui/core';
+function col(){
+    return bgs[Math.floor(Math.random() * 5)]
+}
 
 function Cardfunc() {
     const [queueData, setqueueData] = React.useState({
@@ -25,6 +30,8 @@ function Cardfunc() {
     const { user } = context;
     const uid = user.uid;
     console.log(uid);
+
+
   React.useEffect(() => {
     async function getData() {
         //const q = query(collection(db, "queue"), where("admin_id", "==", uid));
@@ -56,14 +63,17 @@ function Cardfunc() {
       }
   getData();
 }, []);
+//  var st=col()
     return (
         <>
-            <Card sx={{ maxWidth: 345 }}>
-            <CardActionArea>
+        <div style={{padding:"10px"  }} >
+        <Card sx={{ maxWidth: 200, padding:"10px" }}>
+            <CardActionArea style={{flexWrap: 'wrap'}} >
                 <CardMedia
                 component="img"
                 height="140"
-                //image="add_queue.jpg"
+                width="150"
+                image={col()}
                 //alt="Create a Queue"
                 />
                 <CardContent>
@@ -76,6 +86,32 @@ function Cardfunc() {
                 </CardContent>
             </CardActionArea>
             </Card>
+
+            <Grid container>
+                <Grid item xs={6}>
+                <Card sx={{ maxWidth: 200, padding:"10px" }}>
+            <CardActionArea style={{flexWrap: 'wrap'}} >
+                <CardMedia
+                component="img"
+                height="140"
+                width="150"
+                image={col()}
+                //alt="Create a Queue"
+                />
+                <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                {queueData.queueDetails.category}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                {queueData.queueDetails.name}
+                </Typography>
+                </CardContent>
+            </CardActionArea>
+            </Card>
+                </Grid>
+            </Grid>
+        </div>
+            
         </>
     )
 }
