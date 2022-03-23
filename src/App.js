@@ -20,6 +20,7 @@ function App() {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setuser(user);
+      // const uid = user.uid;
     } else {
       Navigate('/login');
     }
