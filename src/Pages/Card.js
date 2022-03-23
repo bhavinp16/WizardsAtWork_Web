@@ -75,6 +75,11 @@ function Cardfunc() {
     return (
         <>
         <div style={{padding:"10px"  }} >
+        <div className="users">
+      {arr.map((user) => (
+        <div className="user"> {user.Avg_wait_time}
+        {user.admin_id}
+        {user.status}
         <Card sx={{ maxWidth: 200, padding:"10px" }}>
             <CardActionArea style={{flexWrap: 'wrap'}} >
                 <CardMedia
@@ -94,6 +99,9 @@ function Cardfunc() {
                 </CardContent>
             </CardActionArea>
             </Card>
+        </div>
+      ))}
+    </div>
             <Button onClick={sm}>HERE</Button>
         </div>
 
