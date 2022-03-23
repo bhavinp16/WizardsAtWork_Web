@@ -16,7 +16,18 @@ function col(){
 }
 
 function Cardfunc() {
-    const [queueData, setqueueData] = React.useState([]);
+    const arr = [];
+    const [queueData, setqueueData] = React.useState({
+        averageWaitingTime: 0, // in minutes
+        arrTokens: [],
+        maxTokens: 0,
+        queueDetails: {},
+        status: true,
+        tokenProcessed: 0,
+        tokenIssued: 0,
+        tokenRemaining: 0,
+        prevTokenTimestamp: 0,
+    });
     const context = useContext(usercontext)
     const { user } = context;
     const uid = user.uid;
@@ -30,7 +41,7 @@ function Cardfunc() {
         var query = collection(db, "queue")
         const querySnapshot = await getDocs(query);
         // console.log(querySnapshot);
-        querySnapshot.forEach((doc) => {
+        querySnapshot.docs.map((doc) => {
             console.log(doc.data());
             // setqueueData(queueData => [...queueData, ])
             setqueueData({
@@ -45,7 +56,7 @@ function Cardfunc() {
                         tokenRemaining: doc.data().max_tokens - doc.data().token_distributed,
                         prevTokenTimestamp: doc.data().prev_timestamp,
             });
-
+            arr.push(doc.data());
         });
     //   const unsub = onSnapshot(
     //     doc(db, "admin", "l3jep9KQkHRVGLdjgQplZINctS42"),
