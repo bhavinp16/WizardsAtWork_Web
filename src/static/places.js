@@ -16,8 +16,8 @@ const places = [
     {
         title: 'Realtime analytics',
         description:
-          'Avoid crowds, avoid germs. Encourages safety of peers as well as employees.',
-        imageUrl: 'https://thumbs.dreamstime.com/b/percent-blue-pie-chart-percentage-vector-infographics-circle-diagram-business-illustration-grey-white-89643592.jpg',
+          'Ananlyse your queues in real time with different visualizations.',
+        imageUrl: 'https://google.github.io/charts/flutter/example/pie_charts/partial_pie_full.png',
         time: 1500,
       },
   
