@@ -33,9 +33,10 @@ export default function BasicModal() {
         edge="start"
         color="inherit"
         aria-label="add"
-        sx={{ mr: 2 }}
+        sx={{ mr: 2 ,height: '100px', width : '100px'}}
+        
       >
-        <AddBoxIcon />
+        <AddBoxIcon sx={{height: '100px', width : '100px', borderRadius: '50%', color:'#2196f3'}}/>
       </IconButton>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
