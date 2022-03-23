@@ -38,7 +38,7 @@ export default function ImageCard({ place, checked }) {
         <CardMedia
           className={classes.media}
           image={place.imageUrl}
-          title="Contemplative Reptile"
+          //title="Contemplative Reptile"
         />
         <CardContent>
           <Typography
