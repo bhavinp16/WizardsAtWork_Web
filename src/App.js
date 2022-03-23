@@ -4,7 +4,7 @@ import './App.css';
 import usercontext from './Context/usercontext';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
-// import { auth } from './firebase';
+import { auth } from './firebase';
 import Home from './Pages/Home';
 import Dashboard from './Pages/Dashboard';
 
@@ -13,17 +13,17 @@ function App() {
   const context = useContext(usercontext)
   const { user, setuser } = context;
 
-  // setuser(auth.currentUser)
-  setuser(true);
+  setuser(auth.currentUser)
+  // setuser(true);
 
 
-  // auth.onAuthStateChanged(function (user) {
-  //   if (user) {
-  //     setuser(user)
-  //   }
-  // })
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      setuser(user)
+    }
+  })
 
-// something
+  // something
   return (
     <Fragment>
       <BrowserRouter>
