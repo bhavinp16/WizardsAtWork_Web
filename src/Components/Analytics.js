@@ -60,6 +60,11 @@ function Analytics() {
     const handleTokenChange = (e) => {
         e.preventDefault();
 
+        if (queueData.tokenIssued >= queueData.maxTokens) {
+            alert("Maximum Token Limit Reached");
+            return;
+        }
+
         // calculate the token's current time
         // update the waiting time
         // remove first token from the arr_tokens
@@ -74,7 +79,7 @@ function Analytics() {
 
         const queueRef = doc(db, 'queue', qid);
         setDoc(queueRef, {
-            Avg_wait_time: Math.floor((queueData.averageWaitingTime + currentTokenTime) / (queueData.tokenProcessed + 1)),
+            Avg_wait_time: Math.floor(((queueData.averageWaitingTime * queueData.tokenProcessed) + currentTokenTime) / (queueData.tokenProcessed + 1)),
             arr_tokens: queueData.arrTokens.slice(1),
             token_distributed: queueData.tokenIssued + 1,
             prev_timestamp: currTimestamp,
@@ -89,7 +94,7 @@ function Analytics() {
 
                 <div className="d-flex justify-items-center align-content-center">
                     <div className="d-flex container justify-content-center align-content-center">
-                        <div class="jumbotron jumbotron-fluid">
+                        <div class="jumbotron jumbotron-fluid shadow mr-5 px-4 rounded-3">
                             <div class="container-fluid">
                                 <h1 class="display-3">Queue Details</h1>
                                 <p class="lead">Category: {queueData.queueDetails.category}</p>
@@ -109,12 +114,17 @@ function Analytics() {
                 <div className='d-flex justify-content-center align-content-center'>
                     <div className="d-flex container justify-content-center align-content-center">
 
-                        <div className="d-flex flex-column">
-                            <PieChart tokenIssued={queueData.tokenIssued} tokenProcessed={queueData.tokenProcessed} tokenRemaining={queueData.tokenRemaining} />
+                        <div className="d-flex flex-column ">
+                            {
+                                queueData.tokenIssued > 0 ?
+                                    <PieChart tokenWaiting={queueData?.arrTokens?.length} tokenProcessed={queueData?.tokenProcessed} tokenRemaining={queueData?.tokenRemaining} />
+                                    :
+                                    <>No Tokens Issued</>
+                            }
 
-                            <div className="d-flex justify-content-center align-content-center mt-4">
-                                <button className='btn btn-primary m-2' onClick={handleStatusChange}>Change Queue Status</button>
-                                <button className='btn btn-dark m-2' onClick={handleTokenChange}>Dismiss Token</button>
+                            <div className="d-flex justify-content-center align-content-center mt-4 ">
+                                <button className='btn btn-primary m-2 shadow' onClick={handleStatusChange}>Change Queue Status</button>
+                                <button className='btn btn-dark m-2 shadow' onClick={handleTokenChange}>Dismiss Token</button>
                             </div>
                         </div>
 
