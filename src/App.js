@@ -8,6 +8,7 @@ import { auth } from './firebase';
 import Home from './Pages/Home';
 import Dashboard from './Pages/Dashboard';
 import { onAuthStateChanged } from 'firebase/auth';
+import Queue from './Pages/Queue';
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
                   {/* <Route exact path="/" element={<Dashboard />} /> */}
                   <Route path="/home" element={<Home />} />
                   <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/queue/:qid" element={<Queue />} />
                 </>
               )}
           </Routes>
