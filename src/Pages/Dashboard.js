@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 // import Icon from '@mui/material/Icon';
 import AddQueue from "../Components/AddQueue"
 import Admin from './Admin';
+import Modal from '../Components/Modal.js'
 
 function Dashboard() {
 
@@ -60,7 +61,11 @@ function Dashboard() {
 
     // )
     return (
-        <Admin />
+        <div>
+            <Navbar/>
+            <Admin />
+            <Modal/>
+        </div>
     )
 }
 

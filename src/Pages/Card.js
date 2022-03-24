@@ -20,10 +20,6 @@ function sm(){
     console.log(arr);
 }
 function Cardfunc() {
-<<<<<<< HEAD
-    const arr = [];
-=======
->>>>>>> ebbca771dc3221ff60272035c6d84761f8757461
     const [queueData, setqueueData] = React.useState({
         averageWaitingTime: 0, // in minutes
         arrTokens: [],
