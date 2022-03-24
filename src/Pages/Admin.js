@@ -63,7 +63,7 @@ function Admin() {
 
     return (
         <>
-            <div className="d-flex flex-grow-0">
+            <div className="d-flex flex-wrap">
                 {
                     queueIds.length > 0 ?
                         (

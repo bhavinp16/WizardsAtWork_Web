@@ -23,11 +23,11 @@ export default function AddQueue() {
         doc(db, "queue", "JGwfAKFauQ2S9ii1r09G"),
         { includeMetadataChanges: true },
         (doc) => {
-            //console.log(doc.data());
+          //console.log(doc.data());
         });
-      }
-  getData();
-}, []);
+    }
+    getData();
+  }, []);
 
   // const onCreate = () => {
   //     //const db = firebase.firestore();
@@ -67,7 +67,7 @@ export default function AddQueue() {
   // }, []);
 
   return (
-    <ul>
+    <div className="m-4">
       {/* <input
         value={newQueue}
         onChange={e => setNewQueue(e.target.value)}
@@ -83,12 +83,12 @@ export default function AddQueue() {
       >
         <AddBoxIcon />
       </IconButton> */}
-      <Modal/>
+      <Modal />
       {/* {queue.map(q => (
                 <li key={q.Queue}>
                     <AdminInput q={q} />
                 </li>
             ))} */}
-    </ul>
+    </div>
   );
 }
