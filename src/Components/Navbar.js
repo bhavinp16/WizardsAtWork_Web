@@ -21,33 +21,25 @@ export default function ButtonAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" className='bg-dark'>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Link className='btn btn-lg text-light' to="/home">QEasy</Link>
+          </Typography>
 
           <div className="d-flex justify-content-between align-content-between">
             <div className='d-flex'>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                <Link className='btn text-light' to="/home">Home</Link>
+                <Link className='btn text-light mx-2' to="/home">Home</Link>
               </Typography>
 
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                <Link className='btn text-light' to="/dashboard">Dashboard</Link>
+                <Link className='btn text-light mx-2' to="/dashboard">Dashboard</Link>
               </Typography>
             </div>
-
-
 
             {
               !user ?
                 (
-                  <Button className='btn text-light' component={Link} to="/login" color="inherit">
+                  <Button className='btn text-light mx-5' component={Link} to="/login" color="inherit">
                     Login
                   </Button>
                 ) :
@@ -61,7 +53,7 @@ export default function ButtonAppBar() {
                       // An error happened.
                       console.log(error);
                     });
-                  }} className='btn text-light' color="inherit" >
+                  }} className='btn text-light mx-2' color="inherit" >
                     Logout
                   </Button>
                 )

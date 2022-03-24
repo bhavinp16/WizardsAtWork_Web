@@ -7,9 +7,15 @@ import { createUserWithEmailAndPassword, FacebookAuthProvider } from 'firebase/a
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import './signup.css';
 
+import { useToasts } from 'react-toast-notifications';
+import NProgress from 'nprogress';
+import './nprogress.css';
 
 
 function Signup() {
+
+    const { addToast } = useToasts();
+
     const context = useContext(usercontext)
     const { user, setuser } = context;
 
@@ -29,26 +35,37 @@ function Signup() {
     const signupsubmit = (e) => {
         e.preventDefault();
 
+        if (formdata.email === "" || formdata.password === "") {
+            addToast("Please fill all the fields", {
+                appearance: 'error',
+                autoDismiss: true,
+            });
+            NProgress.done();
+        }
+
+        NProgress.start();
         createUserWithEmailAndPassword(auth, formdata.email, formdata.password)
             .then((userCredential) => {
                 // Signed in 
                 var userr = userCredential.user;
                 //change userstate in context
                 setuser(userr)
-                alert("User Created", user);
-
+                NProgress.done();
+                addToast("User Created Successfully", { appearance: 'success', autoDismiss: true, autoDismissTimeout: 1500 });
                 <Navigate to="/dashboard" />
             })
             .catch((error) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                console.log(errorCode, errorMessage);
+                NProgress.done();
+                addToast({ errorMessage }, { appearance: 'error', autoDismiss: true, autoDismissTimeout: 1500 });
             });
     }
 
 
     const googleHandler = (e) => {
         e.preventDefault()
+        NProgress.start();
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
@@ -58,6 +75,8 @@ function Signup() {
                 // The signed-in user info.
                 const user = result.user;
                 setuser(user);
+                addToast("Logged In Successfully", { appearance: 'success', autoDismiss: true, autoDismissTimeout: 1500 });
+                NProgress.done();
                 // ...
             }).catch((error) => {
                 // Handle Errors here.
@@ -67,21 +86,24 @@ function Signup() {
                 const email = error.email;
                 // The AuthCredential type that was used.
                 const credential = GoogleAuthProvider.credentialFromError(error);
+                NProgress.done();
                 console.log(errorCode, errorMessage, email, credential);
-                alert(errorMessage);
+                addToast({ errorMessage }, { appearance: 'error', autoDismiss: true, autoDismissTimeout: 1500 });
                 // ...
             });
     }
 
     const facebookHandler = (e) => {
         e.preventDefault();
+        NProgress.start();
         const provider = new FacebookAuthProvider();
         signInWithPopup(auth, provider)
             .then((userCredential) => {
                 // Signed in
                 const userr = userCredential.user;
                 setuser(userr);
-                console.log(user);
+                NProgress.done();
+                addToast("Logged In Successfully", { appearance: 'success', autoDismiss: true, autoDismissTimeout: 1500 });
                 <Navigate to="/dashboard" />
                 // ...
             })
@@ -89,7 +111,8 @@ function Signup() {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorCode, errorMessage);
-                alert(errorMessage);
+                NProgress.done();
+                addToast({ errorMessage }, { appearance: 'error', autoDismiss: true, autoDismissTimeout: 1500 });
             });
     }
 
@@ -148,6 +171,9 @@ function Signup() {
                             <br /><br />
 
                             <Link to="/login" class="btn btn-secondary btn-md btn-block d-flex justify-content-center">Already Have an Account</Link>
+
+                            <br />
+                            <Link to="/home" class="d-flex justify-content-center text-black">To Home Page</Link>
 
                         </form>
                     </div>

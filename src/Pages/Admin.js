@@ -6,7 +6,13 @@ import Infocard from '../Components/InfoCard';
 import { Link } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 
+import { useToasts } from 'react-toast-notifications';
+import NProgress from 'nprogress';
+import './nprogress.css';
+
 function Admin() {
+
+    const { addToast } = useToasts();
 
     const context = useContext(usercontext)
     const { user } = context;
@@ -42,7 +48,9 @@ function Admin() {
             }
             setqueueDetails(queueDetails);
         }
+        NProgress.start();
         getQueueDetails();
+        NProgress.done();
     }, [queueIds]);
 
     const color = {
@@ -55,7 +63,7 @@ function Admin() {
 
     return (
         <>
-            <div className="d-flex flex-grow-0">
+            <div className="d-flex flex-wrap">
                 {
                     queueIds.length > 0 ?
                         (

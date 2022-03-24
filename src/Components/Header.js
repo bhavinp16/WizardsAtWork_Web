@@ -6,6 +6,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 // import { Link as Scroll } from 'react-scroll';
 import Login from '../Pages/Login';
 import Navbar from './Navbar'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
