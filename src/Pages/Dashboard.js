@@ -56,9 +56,8 @@ function Dashboard() {
     //         </Box>
     //         <AddQueue/>
     //     </>
-
-
     // )
+
     return (
         <Admin />
     )

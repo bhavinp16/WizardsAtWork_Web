@@ -19,7 +19,7 @@ export default function ButtonAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" className='bg-dark'>
         <Toolbar>
           <IconButton
             size="large"
@@ -30,35 +30,43 @@ export default function ButtonAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Admin
-          </Typography>
 
-          {
-            !user ?
-              (
-                <Button component={Link} to="/login" color="inherit">
-                  LOGIN
-                </Button>
-              ) :
-              (
-                <Button onClick={() => {
-                  signOut(auth).then(() => {
-                    setuser(null);
-                    <Navigate to="/login" />
-                    // Sign-out successful.
-                  }).catch((error) => {
-                    // An error happened.
-                    console.log(error);
-                  });
+          <div className="d-flex justify-content-between align-content-between">
+            <div className='d-flex'>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link className='btn text-light' to="/home">Home</Link>
+              </Typography>
+
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link className='btn text-light' to="/dashboard">Dashboard</Link>
+              </Typography>
+            </div>
 
 
-                }} color="inherit" >
-                  LOGOUT
-                </Button>
-              )
-          }
 
+            {
+              !user ?
+                (
+                  <Button component={Link} to="/login" color="inherit">
+                    Login
+                  </Button>
+                ) :
+                (
+                  <Button onClick={() => {
+                    signOut(auth).then(() => {
+                      setuser(null);
+                      <Navigate to="/login" />
+                      // Sign-out successful.
+                    }).catch((error) => {
+                      // An error happened.
+                      console.log(error);
+                    });
+                  }} color="inherit" >
+                    Logout
+                  </Button>
+                )
+            }
+          </div>
 
         </Toolbar>
       </AppBar>
