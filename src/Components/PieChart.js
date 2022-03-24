@@ -5,7 +5,6 @@ function PieChart({ tokenRemaining, tokenWaiting, tokenProcessed }) {
 
     const [settings, setSettings] = useState(
         {
-
             // series: [30, 10, 60],
             series: [tokenRemaining, tokenWaiting, tokenProcessed],
             options: {
@@ -34,8 +33,8 @@ function PieChart({ tokenRemaining, tokenWaiting, tokenProcessed }) {
     );
 
     return (
-        <div className="donut m-4 border border-1 border-grey rounded-3 shadow p-4">
-            <Chart options={settings.options} series={settings.series} type="donut" width="380" />
+        <div className="donut m-4 border border-1 border-grey rounded-3 shadow px-2">
+            <Chart className="p-4" options={settings.options} series={settings.series} type="donut" width="380" />
         </div>
     );
 }

@@ -6,7 +6,15 @@ import usercontext from '../Context/usercontext';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import './signup.css';
 
+import { useToasts } from 'react-toast-notifications';
+import NProgress from 'nprogress';
+import './nprogress.css';
+
+
 function Login() {
+
+    const { addToast } = useToasts();
+
     const context = useContext(usercontext)
     const { user, setuser } = context
 
@@ -25,26 +33,29 @@ function Login() {
 
     const logind = (e) => {
         e.preventDefault();
-
+        NProgress.start();
         signInWithEmailAndPassword(auth, formdata.email, formdata.password)
             .then((userCredential) => {
                 // Signed in 
                 const userr = userCredential.user;
                 setuser(userr);
-                console.log(user);
+                NProgress.done();
+                addToast("Logged In Successfully", { appearance: 'success', autoDismiss: true, autoDismissTimeout: 1500 });
                 <Navigate to="/dashboard" />
                 // ...
             })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+            .catch((err) => {
+                const errorCode = err.code;
+                const errorMessage = err.message;
                 console.log(errorCode, errorMessage);
-                alert(errorMessage);
+                NProgress.done();
+                addToast({ err }, { appearance: 'error', autoDismiss: true, autoDismissTimeout: 1500 });
             });
 
     }
     const googleHandler = (e) => {
         e.preventDefault()
+        NProgress.start();
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
@@ -54,6 +65,8 @@ function Login() {
                 // The signed-in user info.
                 const user = result.user;
                 setuser(user);
+                NProgress.done();
+                addToast("Logged In Successfully", { appearance: 'success', autoDismiss: true, autoDismissTimeout: 1500 });
                 // ...
             }).catch((error) => {
                 // Handle Errors here.
@@ -64,28 +77,32 @@ function Login() {
                 // The AuthCredential type that was used.
                 const credential = GoogleAuthProvider.credentialFromError(error);
                 console.log(errorCode, errorMessage, email, credential);
-                alert(errorMessage);
+                NProgress.done();
+
+                addToast({ errorMessage }, { appearance: 'error', autoDismiss: true, autoDismissTimeout: 1500 });
                 // ...
             });
     }
 
     const facebookHandler = (e) => {
         e.preventDefault();
+        NProgress.start();
         const provider = new FacebookAuthProvider();
         signInWithPopup(auth, provider)
             .then((userCredential) => {
                 // Signed in
                 const userr = userCredential.user;
                 setuser(userr);
-                console.log(user);
-                <Navigate to="/dashboard" />
+                NProgress.done();
+                addToast("Logged In Successfully", { appearance: 'success', autoDismiss: true, autoDismissTimeout: 1500 }); <Navigate to="/dashboard" />
                 // ...
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                NProgress.done();
                 console.log(errorCode, errorMessage);
-                alert(errorMessage);
+                addToast({ errorMessage }, { appearance: 'error', autoDismiss: true, autoDismissTimeout: 1500 });
             });
     }
 
@@ -143,6 +160,8 @@ function Login() {
                             <br /><br />
 
                             <Link to="/signup" class="btn btn-secondary btn-md btn-block d-flex justify-content-center">Create an Account</Link>
+                            <br />
+                            <Link to="/home" class="d-flex justify-content-center text-black">To Home Page</Link>
                         </form>
                     </div>
                 </div>

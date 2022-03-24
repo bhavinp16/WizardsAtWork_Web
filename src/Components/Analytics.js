@@ -6,10 +6,14 @@ import InfoCard2 from './InfoCard2';
 import PieChart from './PieChart';
 import Navbar from './Navbar';
 
+import { useToasts } from 'react-toast-notifications';
+import NProgress from 'nprogress';
+import './nprogress.css';
+
 // route /queue/:qid
 function Analytics() {
     // Specific to Queue
-
+    const { addToasts } = useToasts();
     const { qid } = useParams();
 
     const [queueData, setqueueData] = useState({
@@ -27,6 +31,7 @@ function Analytics() {
     // update the states with the data from the database by doing async functions for the same 
     useEffect(() => {
         async function getData() {
+            NProgress.start();
             // write firebase query here to fetch data for that queue;
             const unsub = onSnapshot(
                 doc(db, "queue", qid),
@@ -45,6 +50,7 @@ function Analytics() {
                         tokenRemaining: doc.data().max_tokens - doc.data().token_distributed,
                         prevTokenTimestamp: doc.data().prev_timestamp,
                     });
+                    NProgress.done();
                 });
         }
         getData();
@@ -52,14 +58,16 @@ function Analytics() {
 
     const handleStatusChange = (e) => {
         e.preventDefault();
+        NProgress.start();
         // write firebase query here to update the status of the queue
         const queueRef = doc(db, 'queue', qid);
         setDoc(queueRef, { status: !queueData.status }, { merge: true });
+        NProgress.done();
     }
 
     const handleTokenChange = (e) => {
         e.preventDefault();
-
+        NProgress.start();
         if (queueData.tokenIssued >= queueData.maxTokens) {
             alert("Maximum Token Limit Reached");
             return;
@@ -84,6 +92,7 @@ function Analytics() {
             token_distributed: queueData.tokenIssued + 1,
             prev_timestamp: currTimestamp,
         }, { merge: true });
+        NProgress.done();
     }
 
 
@@ -96,7 +105,7 @@ function Analytics() {
                     <div className="d-flex container justify-content-center align-content-center">
                         <div class="jumbotron jumbotron-fluid shadow mr-5 px-4 rounded-3">
                             <div class="container-fluid">
-                                <h1 class="display-3">Queue Details</h1>
+                                <h3 class="display-3 pl-5 pr-3">Queue Details</h3>
                                 <p class="lead">Category: {queueData.queueDetails.category}</p>
                                 <p class="lead">Name: {queueData.queueDetails.name}</p>
                             </div>
@@ -122,7 +131,7 @@ function Analytics() {
                                     <>No Tokens Issued</>
                             }
 
-                            <div className="d-flex justify-content-center align-content-center mt-4 ">
+                            <div className="d-flex justify-content-center align-content-center mt-2 ">
                                 <button className='btn btn-primary m-2 shadow' onClick={handleStatusChange}>Change Queue Status</button>
                                 <button className='btn btn-dark m-2 shadow' onClick={handleTokenChange}>Dismiss Token</button>
                             </div>
@@ -143,9 +152,6 @@ function Analytics() {
                                 <InfoCard2 label='Queue Status' value={queueData.status ? "Running" : "Stopped"} color={queueData.status ? "success" : "warning"} />
                             </div>
                         </div>
-
-                        {/* Queue Operations */}
-
                     </div>
                 </div>
 
