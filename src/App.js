@@ -48,7 +48,7 @@ function App() {
               (
                 <>
                   <Route path="/login" element={<Navigate to="/dashboard" />} />
-                  <Route path="/signup" element={<Navigate to="/dashoard" />} />
+                  <Route path="/signup" element={<Navigate to="/dashboard" />} />
                   <Route path="/" element={<Navigate to="/home" />} />
                   {/* <Route exact path="/" element={<Dashboard />} /> */}
                   <Route path="/home" element={<Home />} />

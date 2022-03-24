@@ -55,7 +55,6 @@ function Admin() {
 
     return (
         <>
-            <Navbar />
             <div className="d-flex flex-grow-0">
                 {
                     queueIds.length > 0 ?

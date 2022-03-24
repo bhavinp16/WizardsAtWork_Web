@@ -47,7 +47,7 @@ export default function ButtonAppBar() {
             {
               !user ?
                 (
-                  <Button component={Link} to="/login" color="inherit">
+                  <Button className='btn text-light' component={Link} to="/login" color="inherit">
                     Login
                   </Button>
                 ) :
@@ -61,7 +61,7 @@ export default function ButtonAppBar() {
                       // An error happened.
                       console.log(error);
                     });
-                  }} color="inherit" >
+                  }} className='btn text-light' color="inherit" >
                     Logout
                   </Button>
                 )
