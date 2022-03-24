@@ -34,6 +34,15 @@ function Login() {
     const logind = (e) => {
         e.preventDefault();
         NProgress.start();
+
+        if (formdata.email === "" || formdata.password === "") {
+            addToast("Please fill all the fields", {
+                appearance: 'error',
+                autoDismiss: true,
+            });
+            NProgress.done();
+        }
+
         signInWithEmailAndPassword(auth, formdata.email, formdata.password)
             .then((userCredential) => {
                 // Signed in 

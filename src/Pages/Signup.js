@@ -34,6 +34,15 @@ function Signup() {
 
     const signupsubmit = (e) => {
         e.preventDefault();
+
+        if (formdata.email === "" || formdata.password === "") {
+            addToast("Please fill all the fields", {
+                appearance: 'error',
+                autoDismiss: true,
+            });
+            NProgress.done();
+        }
+
         NProgress.start();
         createUserWithEmailAndPassword(auth, formdata.email, formdata.password)
             .then((userCredential) => {
@@ -43,7 +52,6 @@ function Signup() {
                 setuser(userr)
                 NProgress.done();
                 addToast("User Created Successfully", { appearance: 'success', autoDismiss: true, autoDismissTimeout: 1500 });
-
                 <Navigate to="/dashboard" />
             })
             .catch((error) => {

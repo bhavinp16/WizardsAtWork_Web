@@ -8,12 +8,14 @@ import Navbar from './Navbar';
 
 import { useToasts } from 'react-toast-notifications';
 import NProgress from 'nprogress';
-import './nprogress.css';
+import '../Pages/nprogress.css';
 
 // route /queue/:qid
 function Analytics() {
+
     // Specific to Queue
-    const { addToasts } = useToasts();
+    const { addToast } = useToasts();
+
     const { qid } = useParams();
 
     const [queueData, setqueueData] = useState({
@@ -62,6 +64,7 @@ function Analytics() {
         // write firebase query here to update the status of the queue
         const queueRef = doc(db, 'queue', qid);
         setDoc(queueRef, { status: !queueData.status }, { merge: true });
+        addToast("Queue Status Changed Successfully", { appearance: 'success', autoDismiss: true, autoDismissTimeout: 1500 });
         NProgress.done();
     }
 
@@ -69,7 +72,7 @@ function Analytics() {
         e.preventDefault();
         NProgress.start();
         if (queueData.tokenIssued >= queueData.maxTokens) {
-            alert("Maximum Token Limit Reached");
+            addToast("Maximum Token Alloted Status Reached", { appearance: 'error', autoDismiss: true, autoDismissTimeout: 1500 });
             return;
         }
 
@@ -92,6 +95,8 @@ function Analytics() {
             token_distributed: queueData.tokenIssued + 1,
             prev_timestamp: currTimestamp,
         }, { merge: true });
+        addToast("Token Processed Successfully", { appearance: 'success', autoDismiss: true, autoDismissTimeout: 1500 });
+
         NProgress.done();
     }
 
