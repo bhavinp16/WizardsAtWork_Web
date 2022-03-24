@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import AddQueue from "../Components/AddQueue"
 import Admin from './Admin';
 import Modal from '../Components/Modal.js'
+import CreateQueueQ from '../Components/CreateQueue';
 
 function Dashboard() {
 
@@ -57,13 +58,23 @@ function Dashboard() {
     //         </Box>
     //         <AddQueue/>
     //     </>
-    // )
 
+
+    // )
+    var test={
+        max_token:13,
+        queue_details:{
+            category:"shop",
+            name:"abcd"
+        },
+        status:true
+    }
     return (
         <div>
             <Navbar/>
             <Admin />
             <Modal/>
+            <CreateQueueQ queue={test} />
         </div>
     )
 }
