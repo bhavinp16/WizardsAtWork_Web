@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import usercontext from '../Context/usercontext';
 import db from "../firebase";
-import { doc, getDoc, collection, query, where } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import Infocard from '../Components/InfoCard';
+import { Link } from 'react-router-dom';
+import Navbar from '../Components/Navbar';
 
 function Admin() {
 
@@ -20,7 +22,6 @@ function Admin() {
 
         if (docSnap.exists()) {
             setQueueIds(docSnap.data().queue_arr);
-            console.log("queues:", queueIds);
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -42,7 +43,6 @@ function Admin() {
             setqueueDetails(queueDetails);
         }
         getQueueDetails();
-        console.log("queueDetails:", queueDetails);
     }, [queueIds]);
 
     const color = {
@@ -55,18 +55,31 @@ function Admin() {
 
     return (
         <>
-            <div>Ongoing Queues: </div>
             <div className="d-flex flex-grow-0">
                 {
-                    queueDetails.map((queue, index) => {
-                        return (
-                            <div key={index}>
-                                <Infocard label={queue?.queue_details?.category} value={queue?.queue_details?.name} color={color[index % 5]} />
-                            </div>
+                    queueIds.length > 0 ?
+                        (
+                            queueDetails.map((queue, index) => {
+                                return (
+                                    <Link to={`/queue/${queueIds[index]}`}
+                                        className={`btn btn-${color[index % 5]} m-3 pt-4`}
+                                        key={index}>
+                                        <Infocard label={queue?.queue_details?.category} value={queue?.queue_details?.name} color={color[index % 5]} />
+                                    </Link>
+                                )
+                            })
                         )
-                    })
+                        :
+                        (
+                            <>
+                                <div className="">
+                                    <h1>No Queues Created</h1>
+                                </div>
+                            </>
+                        )
+
                 }
-            </div>
+            </div >
         </>
     )
 }

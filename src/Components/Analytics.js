@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 import db from '../firebase';
-import InfoCard from './InfoCard';
+import InfoCard2 from './InfoCard2';
 import PieChart from './PieChart';
 import Navbar from './Navbar';
 
@@ -104,8 +104,8 @@ function Analytics() {
 
                         {/* Current Token Status */}
                         <div className="d-flex mx-5 my-2 px-4 py-2">
-                            <InfoCard label='Current Token' value={queueData.arrTokens[0]} color='primary' />
-                            <InfoCard label='Next Token' value={queueData.arrTokens[1]} color='secondary' />
+                            <InfoCard2 label='Current Token' value={queueData.arrTokens[0]} color='primary' />
+                            <InfoCard2 label='Next Token' value={queueData.arrTokens[1]} color='secondary' />
                         </div>
                     </div>
                 </div>
@@ -130,17 +130,17 @@ function Analytics() {
 
                         {/* Token Data */}
                         <div className="d-flex flex-column m-3">
-                            <InfoCard label='Tokens Processed' value={queueData.tokenProcessed} color='secondary' />
-                            <InfoCard label='Tokens Issued' value={queueData.tokenIssued} color='info' />
-                            <InfoCard label='Tokens Remaining' value={queueData.tokenRemaining} color='danger' />
+                            <InfoCard2 label='Tokens Processed' value={queueData.tokenProcessed} color='secondary' />
+                            <InfoCard2 label='Tokens Issued' value={queueData.tokenIssued} color='info' />
+                            <InfoCard2 label='Tokens Remaining' value={queueData.tokenRemaining} color='danger' />
                         </div>
 
                         <div className="d-flex flex-column m-3">
                             {/* Queue Stats */}
                             <div className="">
-                                <InfoCard label='Average Waiting Time' value={queueData.averageWaitingTime} color='info' />
-                                <InfoCard label='Max Tokens' value={queueData.maxTokens} color='secondary' />
-                                <InfoCard label='Queue Status' value={queueData.status ? "Running" : "Stopped"} color={queueData.status ? "success" : "warning"} />
+                                <InfoCard2 label='Average Waiting Time' value={queueData.averageWaitingTime} color='info' />
+                                <InfoCard2 label='Max Tokens' value={queueData.maxTokens} color='secondary' />
+                                <InfoCard2 label='Queue Status' value={queueData.status ? "Running" : "Stopped"} color={queueData.status ? "success" : "warning"} />
                             </div>
                         </div>
 

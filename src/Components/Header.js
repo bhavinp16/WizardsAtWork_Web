@@ -29,13 +29,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '2rem',
   },
   colorText: {
-    color: '#2196f3',
+    color: '#black',
   },
   container: {
     textAlign: 'center',
   },
   title: {
-    color: '#2196f3',
+    color: '#black',
     fontSize: '4.5rem',
   },
   goSign: {
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '4.5rem',
   },
 }));
+
 export default function Header() {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
@@ -50,27 +51,32 @@ export default function Header() {
     setChecked(true);
   }, []);
   return (
+
     <div className={classes.root} id="header">
       <AppBar className={classes.appbar} elevation={0}>
-        <Navbar/>
+        <Navbar />
       </AppBar>
+
       <Collapse
         in={checked}
         {...(checked ? { timeout: 1000 } : {})}
         collapsedHeight={50}
       >
-        <div className={classes.container}>
-          <h1 className={classes.title}>
-            Welcome to <br />
-            <span className={classes.colorText}>Smart Queue Management</span>
-          </h1>
-          {/* <Scroll to={Login} smooth={true}> */}
-          <div style={{fontFamily:'Arial'}}>
-            <IconButton component={Link} to="/signup">
-              Sign Up<ArrowForwardIcon className={classes.goSign} />
-            </IconButton>
+        <div className="">
+          <div className={classes.container}>
+            <h1 className={classes.title}>
+              Welcome to <br />
+              <span className={classes.colorText}>Smart Queue Management</span>
+            </h1>
+
+            {/* <Scroll to={Login} smooth={true}> */}
+            <div style={{ fontFamily: 'Arial', textColor: 'black' }}>
+              <IconButton component={Link} to="/signup">
+                Get Started<ArrowForwardIcon className={classes.goSign} />
+              </IconButton>
             </div>
-          {/* </Scroll> */}
+            {/* </Scroll> */}
+          </div>
         </div>
       </Collapse>
     </div>
