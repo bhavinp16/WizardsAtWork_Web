@@ -57,9 +57,8 @@ function Dashboard() {
     //         </Box>
     //         <AddQueue/>
     //     </>
-
-
     // )
+
     return (
         <div>
             <Navbar/>
