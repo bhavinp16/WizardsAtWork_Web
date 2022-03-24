@@ -14,7 +14,7 @@ import {
 } from "firebase/firestore";
 
 export default function AddQueue() {
-  // const [newQueueName, setNewQueueName] = React.useState();
+//const [newQueueName, setNewQueueName] = React.useState();
 
 
   React.useEffect(() => {
@@ -35,13 +35,13 @@ export default function AddQueue() {
   // };
 
   // const [newQueue, setNewQueue] = useState("");
-  // const [newAge, setNewAge] = useState(0);
+  // //const [newAge, setNewAge] = useState(0);
 
   // const [queues, setQueues] = useState({});
   // const QueuesCollectionRef = collection(db, "queue");
 
   // const createQueue = async () => {
-  //   await addDoc(QueuesCollectionRef, { Queue: newQueue, age: Number(newAge) });
+  //   await addDoc(QueuesCollectionRef, { Queue: newQueue });
   // };
 
   // const updateQueue = async (id, age) => {
@@ -71,18 +71,8 @@ export default function AddQueue() {
       {/* <input
         value={newQueue}
         onChange={e => setNewQueue(e.target.value)}
-      /> */}
-      {/* <button onClick={onCreate}>Create</button> */}
-      {/* <IconButton
-        //onClick={createQueue}
-        size="large"
-        edge="start"
-        color="inherit"
-        aria-label="add"
-        sx={{ mr: 2 }}
-      >
-        <AddBoxIcon />
-      </IconButton> */}
+      />
+      <button onClick={onCreate}>Create</button> */}
       <Modal/>
       {/* {queue.map(q => (
                 <li key={q.Queue}>

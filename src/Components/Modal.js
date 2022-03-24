@@ -11,6 +11,7 @@ import Switch from '@mui/material/Switch';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import db from "../firebase"
 
 const style = {
   position: 'absolute',
@@ -30,10 +31,67 @@ export default function BasicModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [category, setcategory] = React.useState('');
+  const [category, setcategory] = React.useState({
+    max_token: 0,
+    queue_details: {
+      category: "",
+      name: ""
+    },
+    status: true,
+  });
 
-  const handleChange = (event) => {
+  const handleChange1 = (event) => {
+    event.preventDefault();
     setcategory(event.target.value);
+  };
+
+
+  const handleChange2 = (event) => {
+    event.preventDefault();
+    setcategory(event.target.value);
+  };
+
+  
+  const handleChange3 = (event) => {
+    event.preventDefault();
+    setcategory(event.target.value);
+  };
+
+  const handleChange4 = (event) => {
+    event.preventDefault();
+    setcategory(event.target.value);
+  };
+
+
+
+  var obj1={  //.push automatically makes id
+    max_token:queue.max_token,
+    queue_details: {
+        category: queue.category,
+        name: queue.name
+                },
+    status:queue.status
+  };
+
+  const handleSubmit = (event) => {
+      var obj1={  //.push automatically makes id
+        max_token:queue.max_token,
+        queue_details: {
+            category: queue.category,
+            name: queue.name
+                    },
+        status:queue.status
+      };
+  console.log(queue);
+    //setcategory(event.target.value);
+    event.preventDefault();
+    const docRef =db.ref("queue");
+    const newDocRef=docRef.push();
+    newDocRef.set(obj1);
+  };
+
+  const addItem = name => {
+    db.collection('queue').add({ name });
   };
   return (
     <div>
@@ -88,7 +146,7 @@ export default function BasicModal() {
       <FormControlLabel control={<Switch defaultChecked />} label="Running Queue" />
         </div>
         <div style={{padding:'10px'}}>
-        <Button >Submit</Button>
+        <Button onClick={handleSubmit}>Submit</Button>
         </div>
        
     </Box>
